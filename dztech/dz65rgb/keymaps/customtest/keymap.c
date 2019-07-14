@@ -16,26 +16,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 		  	KC_TRNS,       KC_TRNS,  KC_TRNS,                  KC_TRNS,                   KC_TRNS, KC_TRNS, KC_TRNS,  KC_MPRV,          KC_VOLD,  KC_MNXT),
 };
 
-void rgb_matrix_indicators_user(void)
-{
-	    if (IS_LED_ON(host_keyboard_leds(), USB_LED_CAPS_LOCK))
-	    {
-	      rgb_matrix_set_color(8, 0x00, 0x99, 0x00);
-	    }
-}
-
-void matrix_init_user(void)
-{
+void matrix_init_user(void) {
   //user initialization
 }
 
-void matrix_scan_user(void)
-{
+void matrix_scan_user(void) {
   //user matrix
 }
 
-bool process_record_user(uint16_t keycode, keyrecord_t *record)
-{
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 	  return true;
 }
 
@@ -45,10 +34,14 @@ void rgb_matrix_indicators_user(void) {
            &&  !g_suspend_state
 #endif
          )
-      {
+      switch (biton32(layer_state)) {
 		  case _LAYER0:
-		  	rgb_matrix_set_color_all (0xFF, 0xFF, 0xFF)
-		  case _LAYER1
-		  	rgb_matrix_set_color_all (0x00, 0x66, 0xFF)
+		  	rgb_matrix_set_color_all (0xFF, 0xFF, 0xFF);
+		  case _LAYER1:
+		  	rgb_matrix_set_color_all (0x00, 0x66, 0xFF);
 	  }
+    if (IS_LED_ON(host_keyboard_leds(), USB_LED_CAPS_LOCK)) {
+	      rgb_matrix_set_color(8, 0x00, 0x99, 0x00);
+	  }
+
 }
